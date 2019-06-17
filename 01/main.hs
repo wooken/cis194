@@ -45,8 +45,21 @@ exercise4 = do
 validate :: Integer -> Bool
 validate x = (sumDigits . doubleEveryOther . toDigits $ x) `mod` 10 == 0
 
+exercise5 = print $ hanoi 2 "a" "b" "c" == [("a","c"), ("a","b"), ("c","b")]
+
+type Peg = String
+type Move = (Peg, Peg)
+-- Algorithm:
+-- 1. move n-1 discs from a to c using b as temporary storage
+-- 2. move the top disc from a to b
+-- 3. move n-1 discs from c to b using a as temporary storage
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 1 a b c = [(a, b)]
+hanoi n a b c = hanoi (n - 1) a c b ++ hanoi 1 a b c ++ hanoi (n - 1) c b a
+
 main = do
   exercise1
   exercise2
   exercise3
   exercise4
+  exercise5
