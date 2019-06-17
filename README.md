@@ -3,3 +3,8 @@
 Solutions to CIS 194 homework
 
 [source](https://www.seas.upenn.edu/~cis194/spring13/lectures.html)
+
+To run:
+```
+runghc <file>
+```
