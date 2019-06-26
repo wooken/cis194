@@ -21,11 +21,12 @@ exercise2 = do
   print $ doubleEveryOther [1, 2, 3] == [1, 4, 3]
 
 doubleEveryOtherFromLeft :: [Integer] -> [Integer]
-doubleEveryOtherFromLeft [] = []
-doubleEveryOtherFromLeft [x] = [x]
-doubleEveryOtherFromLeft [x, y] = [x, 2 * y]
-doubleEveryOtherFromLeft [x, y, z] = [x, 2 * y, z]
-doubleEveryOtherFromLeft (x:y:zs) = [x, 2* y] ++ doubleEveryOtherFromLeft zs
+doubleEveryOtherFromLeft x = case x of
+  [] -> []
+  [x] -> [x]
+  [x, y] -> [x, 2 * y]
+  [x, y, z] -> [x, 2 * y, z]
+  (x:y:zs) -> [x, 2* y] ++ doubleEveryOtherFromLeft zs
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther = reverse . doubleEveryOtherFromLeft . reverse
@@ -54,8 +55,9 @@ type Move = (Peg, Peg)
 -- 2. move the top disc from a to b
 -- 3. move n-1 discs from c to b using a as temporary storage
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi 1 a b c = [(a, b)]
-hanoi n a b c = hanoi (n - 1) a c b ++ hanoi 1 a b c ++ hanoi (n - 1) c b a
+hanoi x a b c = case x of
+  1 -> [(a, b)]
+  n -> hanoi (n - 1) a c b ++ hanoi 1 a b c ++ hanoi (n - 1) c b a
 
 main = do
   exercise1
