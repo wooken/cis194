@@ -34,8 +34,7 @@ parse inputString = map parseMessage (lines inputString)
 
 exercise1 :: IO ()
 exercise1 = do
-  putStr "\n"
-  putStrLn "Exercise 1"
+  putStrLn "\nExercise 1"
   print $ parseMessage "E 2 562 help help"
   print $ parseMessage "I 29 la la la"
   print $ parseMessage "This is not in the right format"
@@ -54,8 +53,7 @@ insert newMsg tree = case newMsg of
 
 exercise2 :: IO ()
 exercise2 = do
-  putStr "\n"
-  putStrLn "Exercise 2"
+  putStrLn "\nExercise 2"
   putStrLn $ "'Unknown' type returns a Leaf... " ++ show (insert (Unknown "bleh") Leaf == Leaf)
   putStrLn $ "'LogMessage' type returns a MessageTree... " ++ show (insert (parseMessage "E 2 562 help help") Leaf == Node Leaf (LogMessage (Error 2) 562 "help help") Leaf)
 
@@ -66,9 +64,7 @@ build msgs = case msgs of
   (x:xs) -> insert x (build xs)
 
 exercise3 :: IO ()
-exercise3 = do
-  putStr "\n"
-  putStrLn "Exercise 3 -- no tests =P"
+exercise3 = putStrLn "\nExercise 3 -- no tests =P"
 
 inOrder :: MessageTree -> [LogMessage]
 inOrder tree = case tree of
@@ -77,8 +73,7 @@ inOrder tree = case tree of
 
 exercise4 :: IO ()
 exercise4 = do
-  putStr "\n"
-  putStrLn "Exercise 4"
+  putStrLn "\nExercise 4"
 
   let text = unlines [ "I 6 Completed armadillo processing"
                      , "I 1 Nothing to report"
@@ -106,14 +101,13 @@ exercise4 = do
                                 , "I 11 Initiating self-destruct sequence"
                                 ]
 
-  putStrLn $ "in-order parsing of tree: order is as expected..." ++ show (inOrder (build $ parse text) == ordered)
+  putStrLn $ "in-order parsing of tree: order is as expected... " ++ show (inOrder (build $ parse text) == ordered)
 
 --whatWentWrong :: [LogMessage] -> [String]
 
 exercise5 :: IO ()
 exercise5 = do
-  putStr "\n"
-  putStrLn "Exercise 5"
+  putStrLn "\nExercise 5"
 
   let text = unlines [ "I 6 Completed armadillo processing"
                      , "I 1 Nothing to report"
@@ -133,7 +127,8 @@ exercise5 = do
                  , "Flange failed!"
                  ]
 
-  putStrLn $ "we can filter for errors with severity 50... " ++ show False
+  putStrLn $ show $ whatWentWrong $inOrder $ build $ parse text
+  --putStrLn $ "we can filter for errors with severity 50... " ++ show (whatWentWrong (inOrder $ build $ parse text) == expected)
 
 main :: IO ()
 main = do
