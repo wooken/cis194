@@ -103,7 +103,15 @@ exercise4 = do
 
   putStrLn $ "in-order parsing of tree: order is as expected... " ++ show (inOrder (build $ parse text) == ordered)
 
---whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong msgs = case msgs of
+  [] -> []
+  [LogMessage msgType _ msgString] -> case msgType of
+    Error sev
+      | sev >= 50 -> [msgString]
+      | otherwise -> []
+    _ -> []
+  (x:xs) -> whatWentWrong [x] ++ whatWentWrong xs
 
 exercise5 :: IO ()
 exercise5 = do
@@ -127,8 +135,7 @@ exercise5 = do
                  , "Flange failed!"
                  ]
 
-  putStrLn $ show $ whatWentWrong $inOrder $ build $ parse text
-  --putStrLn $ "we can filter for errors with severity 50... " ++ show (whatWentWrong (inOrder $ build $ parse text) == expected)
+  putStrLn $ "we can filter for errors with severity 50... " ++ show (whatWentWrong (inOrder $ build $ parse text) == expected)
 
 main :: IO ()
 main = do
